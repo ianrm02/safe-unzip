@@ -34,7 +34,7 @@ if [ "$compressed_size" -eq 0 ]; then
   exit 1
 fi
 
-uncompressed_size=$(unzip -l "$ZIPFILE" | awk '/^ *[0-9]/ { total += $1 } END { print total }')
+uncompressed_size=$(unzip -l "$ZIPFILE" | sed -rn '$s/ *([0-9]+).*/\1/p')
 if [ "$uncompressed_size" -eq 0 ]; then
   echo "Could not determine the uncompressed size."
   exit 1
